@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Demo Site for Adobe Target</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* Header */
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        /* Hero Section - Test A/B variations here */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: #c0392b;
+        }
+        
+        /* Products Section - Test Multivariate variations */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            background: #3498db;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background: #2980b9;
+        }
+        
+        /* Banner Section - Test XT personalization */
+        .promotional-banner {
+            background: #f39c12;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 10px;
+        }
+        
+        .promotional-banner h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Newsletter Section */
+        .newsletter {
+            background: #34495e;
+            color: white;
+            padding: 3rem 20px;
+            text-align: center;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .newsletter-input {
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            width: 300px;
+        }
+        
+        .newsletter-button {
+            background: #e74c3c;
+            color: white;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Testing Notes Panel */
+        .testing-notes {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1.5rem;
+            margin: 2rem 20px;
+            border-radius: 8px;
+        }
+        
+        .testing-notes h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .testing-notes ul {
+            margin-left: 2rem;
+        }
+        
+        .testing-notes li {
+            margin-bottom: 0.5rem;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">🛒 TechStore</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section - Perfect for A/B Testing -->
+    <section class="hero" id="home">
+        <h1>Welcome to TechStore</h1>
+        <p>Discover the latest in technology and innovation</p>
+        <button class="cta-button" onclick="alert('CTA Clicked! Track this conversion.')">Shop Now</button>
+    </section>
+
+    <!-- Testing Notes -->
+    <div class="testing-notes">
+        <h3>📋 Adobe Target Testing Ideas for This Site:</h3>
+        <ul>
+            <li><strong>A/B Test:</strong> Change hero headline ("Welcome to TechStore" vs "Transform Your Tech Life"), button color (red vs green), or button text ("Shop Now" vs "Explore Products")</li>
+            <li><strong>Multivariate Test:</strong> Test combinations of product card layouts, image styles, button colors, and price displays simultaneously</li>
+            <li><strong>Experience Targeting (XT):</strong> Show different promotional banners based on visitor location, device type, or returning vs new visitors</li>
+            <li><strong>Auto-Personalization:</strong> Let Adobe Target automatically optimize product recommendations and layouts</li>
+            <li><strong>Recommendations:</strong> Add personalized product suggestions based on browsing behavior</li>
+        </ul>
+    </div>
+
+    <!-- Products Section - Perfect for Multivariate Testing -->
+    <div class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid" id="products">
+            <div class="product-card">
+                <div class="product-image">💻</div>
+                <div class="product-info">
+                    <div class="product-name">Laptop Pro X1</div>
+                    <div class="product-price">$1,299</div>
+                    <p class="product-description">High-performance laptop for professionals and creators</p>
+                    <button class="add-to-cart" onclick="alert('Added to cart!')">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">🎧</div>
+                <div class="product-info">
+                    <div class="product-name">Wireless Headphones</div>
+                    <div class="product-price">$299</div>
+                    <p class="product-description">Premium sound quality with noise cancellation</p>
+                    <button class="add-to-cart" onclick="alert('Added to cart!')">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">📱</div>
+                <div class="product-info">
+                    <div class="product-name">Smartphone Ultra</div>
+                    <div class="product-price">$899</div>
+                    <p class="product-description">Latest flagship with cutting-edge features</p>
+                    <button class="add-to-cart" onclick="alert('Added to cart!')">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">⌚</div>
+                <div class="product-info">
+                    <div class="product-name">Smart Watch Pro</div>
+                    <div class="product-price">$399</div>
+                    <p class="product-description">Track your fitness and stay connected</p>
+                    <button class="add-to-cart" onclick="alert('Added to cart!')">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">📷</div>
+                <div class="product-info">
+                    <div class="product-name">Digital Camera 4K</div>
+                    <div class="product-price">$1,599</div>
+                    <p class="product-description">Capture moments in stunning detail</p>
+                    <button class="add-to-cart" onclick="alert('Added to cart!')">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">🖥️</div>
+                <div class="product-info">
+                    <div class="product-name">4K Monitor</div>
+                    <div class="product-price">$699</div>
+                    <p class="product-description">Crystal clear display for work and play</p>
+                    <button class="add-to-cart" onclick="alert('Added to cart!')">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Promotional Banner - Perfect for Experience Targeting -->
+        <div class="promotional-banner">
+            <h2>🎉 Special Offer: 20% Off All Products!</h2>
+            <p>Use code: TECH20 at checkout. Limited time only!</p>
+            <button class="cta-button">Claim Discount</button>
+        </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <h2>Stay Updated</h2>
+        <p>Subscribe to our newsletter for exclusive deals and tech news</p>
+        <div class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Enter your email">
+            <button class="newsletter-button" onclick="alert('Subscribed!')">Subscribe</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 TechStore. Demo site for Adobe Target testing purposes.</p>
+    </footer>
+</body>
+</html>
