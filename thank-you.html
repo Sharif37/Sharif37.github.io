@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - TechStore</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .confirmation-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+        
+        .confirmation-card {
+            background: white;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            color: #27ae60;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        
+        .order-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .order-details h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #27ae60;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #dee2e6;
+        }
+        
+        .detail-label {
+            color: #666;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .items-list {
+            margin-top: 1.5rem;
+        }
+        
+        .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+        
+        .item-sku {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+        
+        .continue-shopping {
+            background: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 2rem;
+            transition: background 0.3s;
+        }
+        
+        .continue-shopping:hover {
+            background: #2980b9;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .debug-info {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        
+        .debug-info h3 {
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+        
+        .debug-info p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .debug-info code {
+            background: #fff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        .info-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: #856404;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+    </style>
+    
+    <!-- Pre-hiding snippet for Adobe Target -->
+    <script>
+        ;(function(win, doc, style, timeout) {
+            var STYLE_ID = 'at-body-style';
+            function getParent() {
+                return doc.getElementsByTagName('head')[0];
+            }
+            function addStyle(parent, id, def) {
+                if (!parent) {
+                    return;
+                }
+                var style = doc.createElement('style');
+                style.id = id;
+                style.innerHTML = def;
+                parent.appendChild(style);
+            }
+            function removeStyle(parent, id) {
+                if (!parent) {
+                    return;
+                }
+                var style = doc.getElementById(id);
+                if (!style) {
+                    return;
+                }
+                parent.removeChild(style);
+            }
+            addStyle(getParent(), STYLE_ID, style);
+            setTimeout(function() {
+                removeStyle(getParent(), STYLE_ID);
+            }, timeout);
+        }(window, document, "body {opacity: 0 !important}", 3000));
+    </script>
+
+    <!-- Adobe Launch Script -->
+    <script src="https://assets.adobedtm.com/ea3d45be83a5/e569de06a087/launch-52f22b0cf6c6-development.min.js" async></script>
+    
+    <!-- Initialize Data Layer from localStorage -->
+    <script>
+        // Retrieve cart data from localStorage (set by the main page)
+        var cartData = localStorage.getItem('checkoutCart');
+        
+        if (cartData) {
+            var parsedCart = JSON.parse(cartData);
+            window.digitalData = {
+                cart: parsedCart
+            };
+            // Clear cart from localStorage after retrieving
+            localStorage.removeItem('checkoutCart');
+        } else {
+            // Fallback demo data if accessed directly
+            window.digitalData = {
+                cart: {
+                    orderId: "ORD-DEMO123",
+                    cartAmount: 1998.00,
+                    cartEntries: [
+                        { sku: "laptop-pro-x1", name: "Laptop Pro X1", price: 1299 },
+                        { sku: "monitor-4k", name: "4K Monitor", price: 699 }
+                    ]
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">🛒 TechStore</div>
+        </nav>
+    </header>
+
+    <!-- Order Confirmation Content -->
+    <div class="confirmation-container">
+        <div class="confirmation-card">
+            <div class="success-icon">✅</div>
+            <h1>Order Confirmed!</h1>
+            <p>Thank you for your purchase. Your order has been successfully placed.</p>
+            
+            <div class="order-details">
+                <h2>Order Details</h2>
+                <div class="detail-row">
+                    <span class="detail-label">Order ID:</span>
+                    <span class="detail-value" id="orderId">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Order Date:</span>
+                    <span class="detail-value" id="orderDate">-</span>
+                </div>
+                
+                <div class="items-list">
+                    <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Items Ordered:</h3>
+                    <div id="itemsList"></div>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Total Amount:</span>
+                    <span class="detail-value" id="orderTotal">-</span>
+                </div>
+            </div>
+            
+            <a href="index.html" class="continue-shopping">Continue Shopping</a>
+            
+            <!-- Debug Info for Adobe Launch Setup -->
+            <div class="debug-info">
+                <h3>🔍 Data Layer Values (for Adobe Launch)</h3>
+                <p><strong>Order ID:</strong> <code id="debugOrderId">-</code></p>
+                <p><strong>Order Total:</strong> <code id="debugTotal">-</code></p>
+                <p><strong>Product SKUs (comma-separated):</strong> <code id="debugSkus">-</code></p>
+                
+                <div class="info-note">
+                    <strong>📋 Adobe Launch Setup Instructions:</strong><br>
+                    Create these <strong>Data Elements</strong>:<br>
+                    • <code>Order Id</code> → JavaScript Variable: <code>digitalData.cart.orderId</code><br>
+                    • <code>Cart Amount</code> → JavaScript Variable: <code>digitalData.cart.cartAmount</code><br>
+                    • <code>Cart SKUs (Target)</code> → Custom Code to format SKUs array<br><br>
+                    
+                    Create a <strong>Rule</strong> that fires on this page (Path contains "thank-you.html") with:<br>
+                    • Event: Library Loaded (Page Top), Order: 60<br>
+                    • Action: Custom Code with adobe.target.getOffer() using the data elements above
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 TechStore. Demo site for Adobe Target testing purposes.</p>
+    </footer>
+
+    <!-- Display Order Information -->
+    <script>
+        // Display order information on page
+        document.getElementById('orderId').textContent = window.digitalData.cart.orderId;
+        document.getElementById('orderDate').textContent = new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        document.getElementById('orderTotal').textContent = '$' + window.digitalData.cart.cartAmount.toFixed(2);
+        
+        // Display items
+        var itemsHtml = '';
+        window.digitalData.cart.cartEntries.forEach(function(item) {
+            itemsHtml += '<div class="item">' +
+                        '<div>' +
+                        '<div>' + item.name + '</div>' +
+                        '<div class="item-sku">SKU: ' + item.sku + '</div>' +
+                        '</div>' +
+                        '<span>$' + item.price.toFixed(2) + '</span>' +
+                        '</div>';
+        });
+        document.getElementById('itemsList').innerHTML = itemsHtml;
+        
+        // Format SKUs for Target (comma-separated, lowercase)
+        var targetProdSkus = "";
+        for (var i = 0; i < window.digitalData.cart.cartEntries.length; i++) {
+            if (i > 0) {
+                targetProdSkus = targetProdSkus + ",";
+            }
+            targetProdSkus = targetProdSkus + window.digitalData.cart.cartEntries[i].sku.toLowerCase();
+        }
+        
+        // Display debug info
+        document.getElementById('debugOrderId').textContent = window.digitalData.cart.orderId;
+        document.getElementById('debugTotal').textContent = window.digitalData.cart.cartAmount;
+        document.getElementById('debugSkus').textContent = targetProdSkus;
+        
+        // Log to console for debugging
+        console.log('=== Order Confirmation Data Layer ===');
+        console.log('Order ID:', window.digitalData.cart.orderId);
+        console.log('Order Total:', window.digitalData.cart.cartAmount);
+        console.log('Product SKUs:', targetProdSkus);
+        console.log('Full Data Layer:', window.digitalData);
+    </script>
+</body>
+</html>
