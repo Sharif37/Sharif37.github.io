@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechStore - Demo Site for Adobe Target</title>
-<script src="https://assets.adobedtm.com/ea3d45be83a5/e569de06a087/launch-52f22b0cf6c6-development.min.js" async></script>
+
     
     <style>
         * {
@@ -257,6 +257,41 @@
             color: #856404;
         }
     </style>
+    <script>
+    
+  ;(function(win, doc, style, timeout) {
+    var STYLE_ID = 'at-body-style';
+    function getParent() {
+      return doc.getElementsByTagName('head')[0];
+    }
+    function addStyle(parent, id, def) {
+      if (!parent) {
+        return;
+      }
+      var style = doc.createElement('style');
+      style.id = id;
+      style.innerHTML = def;
+      parent.appendChild(style);
+    }
+    function removeStyle(parent, id) {
+      if (!parent) {
+        return;
+      }
+      var style = doc.getElementById(id);
+      if (!style) {
+        return;
+      }
+      parent.removeChild(style);
+    }
+    addStyle(getParent(), STYLE_ID, style);
+    setTimeout(function() {
+      removeStyle(getParent(), STYLE_ID);
+    }, timeout);
+  }(window, document, "body {opacity: 0 !important}", 3000));
+    </script>
+
+    <script src="https://assets.adobedtm.com/ea3d45be83a5/e569de06a087/launch-52f22b0cf6c6-development.min.js" async></script>
+    
 </head>
 <body>
     <!-- Header -->
