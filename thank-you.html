@@ -218,9 +218,8 @@
     <!-- Adobe Launch Script -->
     <script src="https://assets.adobedtm.com/ea3d45be83a5/e569de06a087/launch-52f22b0cf6c6-development.min.js" async></script>
     
-    <!-- Initialize Data Layer from localStorage -->
+   
     <script>
-        // Retrieve cart data from localStorage (set by the main page)
         var cartData = localStorage.getItem('checkoutCart');
         
         if (cartData) {
@@ -228,32 +227,21 @@
             window.digitalData = {
                 cart: parsedCart
             };
-            // Clear cart from localStorage after retrieving
+        
             localStorage.removeItem('checkoutCart');
         } else {
-            // Fallback demo data if accessed directly
-            window.digitalData = {
-                cart: {
-                    orderId: "ORD-DEMO123",
-                    cartAmount: 1998.00,
-                    cartEntries: [
-                        { sku: "laptop-pro-x1", name: "Laptop Pro X1", price: 1299 },
-                        { sku: "monitor-4k", name: "4K Monitor", price: 699 }
-                    ]
-                }
-            };
+           console.warn('No cart data found in localStorage.');
         }
     </script>
 </head>
 <body>
-    <!-- Header -->
+   
     <header>
         <nav>
             <div class="logo">🛒 TechStore</div>
         </nav>
     </header>
 
-    <!-- Order Confirmation Content -->
     <div class="confirmation-container">
         <div class="confirmation-card">
             <div class="success-icon">✅</div>
@@ -284,25 +272,7 @@
             
             <a href="index.html" class="continue-shopping">Continue Shopping</a>
             
-            <!-- Debug Info for Adobe Launch Setup -->
-            <div class="debug-info">
-                <h3>🔍 Data Layer Values (for Adobe Launch)</h3>
-                <p><strong>Order ID:</strong> <code id="debugOrderId">-</code></p>
-                <p><strong>Order Total:</strong> <code id="debugTotal">-</code></p>
-                <p><strong>Product SKUs (comma-separated):</strong> <code id="debugSkus">-</code></p>
-                
-                <div class="info-note">
-                    <strong>📋 Adobe Launch Setup Instructions:</strong><br>
-                    Create these <strong>Data Elements</strong>:<br>
-                    • <code>Order Id</code> → JavaScript Variable: <code>digitalData.cart.orderId</code><br>
-                    • <code>Cart Amount</code> → JavaScript Variable: <code>digitalData.cart.cartAmount</code><br>
-                    • <code>Cart SKUs (Target)</code> → Custom Code to format SKUs array<br><br>
-                    
-                    Create a <strong>Rule</strong> that fires on this page (Path contains "thank-you.html") with:<br>
-                    • Event: Library Loaded (Page Top), Order: 60<br>
-                    • Action: Custom Code with adobe.target.getOffer() using the data elements above
-                </div>
-            </div>
+           
         </div>
     </div>
 
@@ -313,7 +283,6 @@
 
     <!-- Display Order Information -->
     <script>
-        // Display order information on page
         document.getElementById('orderId').textContent = window.digitalData.cart.orderId;
         document.getElementById('orderDate').textContent = new Date().toLocaleDateString('en-US', { 
             year: 'numeric', 
@@ -335,7 +304,7 @@
         });
         document.getElementById('itemsList').innerHTML = itemsHtml;
         
-        // Format SKUs for Target (comma-separated, lowercase)
+       
         var targetProdSkus = "";
         for (var i = 0; i < window.digitalData.cart.cartEntries.length; i++) {
             if (i > 0) {
@@ -344,17 +313,6 @@
             targetProdSkus = targetProdSkus + window.digitalData.cart.cartEntries[i].sku.toLowerCase();
         }
         
-        // Display debug info
-        document.getElementById('debugOrderId').textContent = window.digitalData.cart.orderId;
-        document.getElementById('debugTotal').textContent = window.digitalData.cart.cartAmount;
-        document.getElementById('debugSkus').textContent = targetProdSkus;
-        
-        // Log to console for debugging
-        console.log('=== Order Confirmation Data Layer ===');
-        console.log('Order ID:', window.digitalData.cart.orderId);
-        console.log('Order Total:', window.digitalData.cart.cartAmount);
-        console.log('Product SKUs:', targetProdSkus);
-        console.log('Full Data Layer:', window.digitalData);
     </script>
 </body>
 </html>
