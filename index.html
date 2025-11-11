@@ -482,7 +482,7 @@
 
     <script src="https://assets.adobedtm.com/ea3d45be83a5/e569de06a087/launch-52f22b0cf6c6-development.min.js" async></script>
     
-    <!-- Initialize Data Layer -->
+  
     <script>
         window.digitalData = {
             cart: {
@@ -513,7 +513,6 @@
         </nav>
     </header>
 
-    <!-- Notification -->
     <div class="notification" id="notification">
         Item added to cart!
     </div>
@@ -548,16 +547,6 @@
         <button class="cta-button" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Shop Now</button>
     </section>
 
-    <!-- Testing Notes -->
-    <div class="testing-notes">
-        <h3>📋 Adobe Target Testing Ideas for This Site:</h3>
-        <ul>
-            <li><strong>A/B Test:</strong> Change hero headline ("Welcome to TechStore" vs "Transform Your Tech Life"), button color (red vs green), or button text ("Shop Now" vs "Explore Products")</li>
-            <li><strong>Multivariate Test:</strong> Test combinations of product card layouts, image styles, button colors, and price displays simultaneously</li>
-            <li><strong>Experience Targeting (XT):</strong> Show different promotional banners based on visitor location, device type, or returning vs new visitors</li>
-            <li><strong>Order Confirmation:</strong> Add items to cart and checkout to test order confirmation tracking</li>
-        </ul>
-    </div>
 
     <!-- Products Section -->
     <div class="container">
@@ -647,11 +636,10 @@
         <p>&copy; 2024 TechStore. Demo site for Adobe Target testing purposes.</p>
     </footer>
 
-    <!-- Shopping Cart JavaScript -->
+   
     <script>
         // Cart functionality
         function addToCart(sku, name, price) {
-            // Check if item already exists
             var existingItem = window.digitalData.cart.cartEntries.find(function(item) {
                 return item.sku === sku;
             });
@@ -735,12 +723,12 @@
             
             // Generate order ID
             window.digitalData.cart.orderId = 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-            
+            localStorage.setItem('checkoutCart', JSON.stringify(window.digitalData.cart));
             // Redirect to thank you page
             window.location.href = 'thank-you.html';
         }
         
-        // Close cart when clicking outside
+       
         document.getElementById('cartModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 toggleCart();
