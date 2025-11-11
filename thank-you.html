@@ -304,15 +304,6 @@
         });
         document.getElementById('itemsList').innerHTML = itemsHtml;
         
-       
-        var targetProdSkus = "";
-        for (var i = 0; i < window.digitalData.cart.cartEntries.length; i++) {
-            if (i > 0) {
-                targetProdSkus = targetProdSkus + ",";
-            }
-            targetProdSkus = targetProdSkus + window.digitalData.cart.cartEntries[i].sku.toLowerCase();
-        }
-        
     </script>
 </body>
 </html>
