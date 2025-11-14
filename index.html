@@ -488,7 +488,8 @@
             cart: {
                 orderId: "",
                 cartAmount: 0,
-                cartEntries: []
+                cartEntries: [],
+                lastPurchaseTime:-1
             }
         };
     </script>
@@ -723,6 +724,8 @@
             
             // Generate order ID
             window.digitalData.cart.orderId = 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            window.digitalData.cart.lastPurchaseTime = new Date().getTime();
+            localStorage.setItem('lastPurchaseTime', window.digitalData.cart.lastPurchaseTime);
             localStorage.setItem('checkoutCart', JSON.stringify(window.digitalData.cart));
             // Redirect to thank you page
             window.location.href = 'thank-you.html';
